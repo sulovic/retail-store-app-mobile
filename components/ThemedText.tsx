@@ -17,31 +17,22 @@ const ThemedText = ({ style, lightColor, darkColor, type = "default", ...rest }:
 export default ThemedText;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignSelf: "center",
-  },
   default: {
-    fontSize: 18,
-    lineHeight: 24,
+    fontSize: 24,
   },
   defaultSemiBold: {
-    lineHeight: 24,
+    fontSize: 24,
     fontWeight: "600",
   },
   title: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
-    lineHeight: 32,
   },
   subtitle: {
-    fontSize: 20,
+    fontSize: 24,
     fontWeight: "bold",
   },
   link: {
-    lineHeight: 30,
-    fontSize: 16,
-    color: "#0a7ea4",
+    lineHeight: 32,
   },
 });

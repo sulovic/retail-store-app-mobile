@@ -1,46 +1,30 @@
 import React, { createContext, useState, ReactNode } from "react";
-import {
-  apiLoginConnector,
-  apiLogoutConnector,
-  apiRefreshConnector,
-} from "@/services/apiAuthConnectors";
+import { apiLoginConnector, apiLogoutConnector, apiRefreshConnector } from "@/services/apiAuthConnectors";
 import { Toast } from "toastify-react-native";
 import { jwtDecode } from "jwt-decode";
-import type {
-  AuthUser,
-  AuthContextType,
-  AxiosLoginResponse,
-} from "@/types/types";
+import type { AuthUser, AuthContextType, AxiosLoginResponse } from "@/types/types";
 import { handleApiError } from "@/services/errorHandlers";
-import { useRouter } from 'expo-router';
+import { useRouter } from "expo-router";
 
-export const AuthContext: React.Context<AuthContextType | null> =
-  createContext<AuthContextType | null>(null);
+export const AuthContext: React.Context<AuthContextType | null> = createContext<AuthContextType | null>(null);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [authUser, setAuthUser] = useState<AuthUser | null>(null);
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const router = useRouter();
 
-  const handleLogin: AuthContextType["handleLogin"] = async ({
-    type,
-    email,
-    password,
-    credential,
-  }) => {
+  const handleLogin: AuthContextType["handleLogin"] = async ({ type, email, password, credential }) => {
     // User / password login
     if (type === "password") {
       try {
-        const loginResponse: AxiosLoginResponse | undefined =
-          await apiLoginConnector({ type, email, password });
+        const loginResponse: AxiosLoginResponse | undefined = await apiLoginConnector({ type, email, password });
         if (loginResponse) {
           const accessToken: string = loginResponse?.data?.accessToken;
           const decodedAccessToken: AuthUser = jwtDecode(accessToken);
           Toast.success(`Uspešno ste se prijavili`, "top");
           setAuthUser(decodedAccessToken);
           setAccessToken(accessToken);
+          router.push("/protected/home/HomeScreen");
         }
       } catch (error) {
         handleApiError(error);
@@ -49,14 +33,14 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       // Google login
     } else if (type === "google") {
       try {
-        const loginResponse: AxiosLoginResponse | undefined =
-          await apiLoginConnector({ type, credential });
+        const loginResponse: AxiosLoginResponse | undefined = await apiLoginConnector({ type, credential });
         if (loginResponse) {
           const accessToken: string = loginResponse?.data?.accessToken;
           const decodedAccessToken: AuthUser = jwtDecode(accessToken);
           Toast.success(`Uspešno ste se prijavili`, "top");
           setAuthUser(decodedAccessToken);
           setAccessToken(accessToken);
+          router.push("/protected/home/HomeScreen");
         }
       } catch (error) {
         handleApiError(error);
@@ -69,31 +53,28 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       await apiLogoutConnector();
       setAuthUser(null);
       setAccessToken(null);
-      router.push("/login");
+      router.push("/");
       Toast.success(`Uspešno ste se odjavili`, "top");
     } catch (error) {
       handleApiError(error);
     }
   };
 
-  const handleRefreshToken: AuthContextType["handleRefreshToken"] =
-    async () => {
-      try {
-        const refreshTokenResponse: AxiosLoginResponse | undefined =
-          await apiRefreshConnector();
+  const handleRefreshToken: AuthContextType["handleRefreshToken"] = async () => {
+    try {
+      const refreshTokenResponse: AxiosLoginResponse | undefined = await apiRefreshConnector();
 
-        if (refreshTokenResponse) {
-          const newAccessToken: string =
-            refreshTokenResponse?.data?.accessToken;
-          const decodedAccessToken: AuthUser = jwtDecode(newAccessToken);
-          setAuthUser(decodedAccessToken);
-          setAccessToken(newAccessToken);
-          return newAccessToken;
-        }
-      } catch (error) {
-        handleApiError(error);
+      if (refreshTokenResponse) {
+        const newAccessToken: string = refreshTokenResponse?.data?.accessToken;
+        const decodedAccessToken: AuthUser = jwtDecode(newAccessToken);
+        setAuthUser(decodedAccessToken);
+        setAccessToken(newAccessToken);
+        return newAccessToken;
       }
-    };
+    } catch (error) {
+      handleApiError(error);
+    }
+  };
 
   return (
     <AuthContext.Provider

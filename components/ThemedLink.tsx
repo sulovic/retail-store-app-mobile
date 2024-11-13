@@ -20,25 +20,22 @@ const ThemedLink = <T extends string | object>({ lightColor, darkColor, href, ty
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 24,
   },
   defaultSemiBold: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 24,
     fontWeight: "600",
   },
   title: {
-    fontSize: 32,
+    fontSize: 30,
     fontWeight: "bold",
-    lineHeight: 32,
   },
   subtitle: {
     fontSize: 20,
     fontWeight: "bold",
   },
   link: {
-    fontSize: 18,
+    fontSize: 24,
   },
 });
 

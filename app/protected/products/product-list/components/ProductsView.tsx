@@ -3,9 +3,9 @@ import ThemedText from "@/components/ThemedText";
 import ThemedView from "@/components/ThemedView";
 import ThemedScrollView from "@/components/ThemedScrollView";
 import MyButton from "@/components/MyButton";
-import { Image } from "react-native";
+import { Image } from "expo-image";
 
-const ProductsView: React.FC<{ products: Product[]; tableHeaders: string[]; handleEditProduct: (product: Product) => void; handleDeleteProduct: (product: Product) => void }> = ({ products, tableHeaders, handleEditProduct, handleDeleteProduct }) => {
+const ProductsView: React.FC<{ products: Product[]; handleEditProduct: (product: Product) => void; handleDeleteProduct: (product: Product) => void; loading: boolean }> = ({ products, handleEditProduct, handleDeleteProduct, loading }) => {
   return (
     <ThemedScrollView>
       {products.length > 0 ? (
@@ -18,7 +18,7 @@ const ProductsView: React.FC<{ products: Product[]; tableHeaders: string[]; hand
                 <ThemedText>Cena: {product.productPrice} RSD</ThemedText>
               </ThemedView>
               <ThemedView className="w-1/4 flex justify-center">
-                <Image source={require("@/assets/images/placeholder.png")} className="w-24 h-24"  />
+                <Image source={require("@/assets/images/placeholder.png")} className="w-24 h-24" />
               </ThemedView>
             </ThemedView>
 
@@ -29,6 +29,8 @@ const ProductsView: React.FC<{ products: Product[]; tableHeaders: string[]; hand
             <ThemedView className="border-b border-zinc-400 my-4 " />
           </ThemedView>
         ))
+      ) : loading ? (
+        <ThemedText>Loading...</ThemedText>
       ) : (
         <ThemedText>Nema proizvoda</ThemedText>
       )}

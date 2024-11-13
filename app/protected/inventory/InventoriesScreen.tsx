@@ -9,6 +9,7 @@ import { handleApiError } from "@/services/errorHandlers";
 import { Stack } from "expo-router";
 import { format } from "date-fns";
 import { StyleSheet } from "react-native";
+import { ForceTouchGestureHandler } from "react-native-gesture-handler";
 
 const InventoriesScreen = () => {
   const [inventories, setInventories] = useState<Inventory[]>([]);
@@ -37,18 +38,18 @@ const InventoriesScreen = () => {
       <Stack.Screen options={{ title: "Lista popisa" }} />
 
       <ThemedView>
-        <ThemedText>Lista popisa</ThemedText>
+        <ThemedText type="title">Lista popisa</ThemedText>
         <ThemedScrollView>
           {inventories.length > 0 ? (
             inventories.map((inventory) => (
-              <ThemedView style={styles.productList} key={inventory.inventoryId}>
-                <ThemedText style={{ flexBasis: "10%" }}>{inventory.inventoryId}</ThemedText>
-                <ThemedText style={{ flexBasis: "30%" }}>{inventory.Stores.storeName}</ThemedText>
-                <ThemedText style={{ flexBasis: "25%" }}>{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
-                <ThemedLink style={{ flexBasis: "10%" }} href={{ pathname: "/inventory/add-products/ScanProductsScreen", params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") } }}>
+              <ThemedView style={styles.container} key={inventory.inventoryId}>
+                <ThemedText style={[{ flexBasis: "10%" }, styles.textField]}>{inventory.inventoryId}</ThemedText>
+                <ThemedText style={[{ flexBasis: "35%" }, styles.textField]}>{inventory.Stores.storeName}</ThemedText>
+                <ThemedText style={[{ flexBasis: "25%" }, styles.textField]}>{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
+                <ThemedLink style={[{ flexBasis: "10%" }, styles.textField]} href={{ pathname: "/protected/inventory/scan-products/ScanProductsScreen", params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") } }}>
                   Sken
                 </ThemedLink>
-                <ThemedLink style={{ flexBasis: "10%" }} href={{ pathname: "/inventory/inventory-list/InventoryListScreen", params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") } }}>
+                <ThemedLink style={[{ flexBasis: "10%" }, styles.textField]} href={{ pathname: "/protected/inventory/inventory-list/InventoryListScreen", params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") } }}>
                   List
                 </ThemedLink>
               </ThemedView>
@@ -67,12 +68,20 @@ const InventoriesScreen = () => {
 export default InventoriesScreen;
 
 const styles = StyleSheet.create({
-  productList: {
+  container: {
     flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     alignContent: "center",
     gap: 4,
     paddingVertical: 4,
+    borderWidth: 2,
+    borderRadius: 8,
+    marginVertical: 4,
+    minHeight: 80,
+  },
+  textField: {
+    justifyContent: "flex-start",
+    alignContent: "center",
   },
 });

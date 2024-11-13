@@ -1,11 +1,16 @@
 {
   "expo": {
-    "name": "retail-store-app-mobile",
-    "slug": "retail-store-app-mobile",
+    "name": "retail-store-app",
+    "slug": "retail-store-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "retail-store-app",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "./assets/images/splash.png",
@@ -19,14 +24,18 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-  "plugins": [
+    "plugins": [
       "expo-router",
       [
         "expo-camera",
@@ -39,6 +48,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f18c2dab-83b4-4636-ba83-3a98c3960e33"
+      }
+    },
+    "owner": "sulovic"
   }
 }

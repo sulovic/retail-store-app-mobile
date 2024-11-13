@@ -2,7 +2,7 @@ import { Toast } from "toastify-react-native";
 
 export const handleApiError: (error: any) => void = (error) => {
   if (error.response?.status === 400) {
-    Toast.warn("Nisu poslati podaci za upis.", "top");
+    Toast.warn("Nisu poslati neophodni podaci.", "top");
   } else if (error.response?.status === 401) {
     Toast.warn("Niste autorizovani da posetite ovu stranu.", "top");
   } else if (error.response?.status === 403) {

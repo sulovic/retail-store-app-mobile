@@ -6,36 +6,36 @@ import { Product } from "@/types/types";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import { handleApiError } from "@/services/errorHandlers";
 import { ScrollView } from "react-native-gesture-handler";
-import { Stack } from 'expo-router'
+import { Stack } from "expo-router";
 import ProductsView from "./components/ProductsView";
 
-const ProductsScreen = () => {
+const ProductsListScreen = () => {
   const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const axiosPrivate = useAxiosPrivate();
 
   const getProducts = async () => {
+    setLoading(true);
     try {
       const products: { data: Product[] } = await axiosPrivate.get("/api/products");
       setProducts(products.data);
     } catch (error) {
       handleApiError(error);
+    } finally {
+      setLoading(false);
     }
   };
+
   useEffect(() => {
     getProducts();
   }, []);
 
-
-  const handleEditProduct = ( product: Product) => {
-    console.log(product)
+  const handleEditProduct = (product: Product) => {
+    console.log(product);
   };
-  const handleDeleteProduct = ( product: Product) => {
-    console.log(product)
+  const handleDeleteProduct = (product: Product) => {
+    console.log(product);
   };
-
-
-
-  const tableHeaders = ["Naziv", "Barkod", "Cena", "Opis", "Slika", "Akcija"];
 
   return (
     <>
@@ -46,10 +46,10 @@ const ProductsScreen = () => {
           <MyButton title="Osveži" onPress={() => getProducts()} />
         </ThemedView>
         <ThemedView className="border-b border-zinc-400 my-4 " />
-        <ProductsView products={products} tableHeaders={tableHeaders} handleEditProduct ={handleEditProduct} handleDeleteProduct={ handleDeleteProduct} />
+        <ProductsView products={products} handleEditProduct={handleEditProduct} handleDeleteProduct={handleDeleteProduct} loading={loading} />
       </ScrollView>
     </>
   );
 };
 
-export default ProductsScreen;
+export default ProductsListScreen;
