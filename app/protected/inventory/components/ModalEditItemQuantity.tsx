@@ -8,6 +8,7 @@ import ThemedTextInput from "@/components/ThemedTextInput";
 import { Toast } from "toastify-react-native";
 
 interface ModalComponentProps {
+  editPrice: boolean;
   selectedInventoryProduct: InventoryProduct;
   setSelectedInventoryProduct: React.Dispatch<React.SetStateAction<InventoryProduct | null>>;
   showEditModal: boolean;
@@ -16,6 +17,7 @@ interface ModalComponentProps {
 }
 
 const ModalEditItemQuantity: React.FC<ModalComponentProps> = ({
+  editPrice,
   showEditModal,
   onOk,
   onCancel,
@@ -74,7 +76,7 @@ const ModalEditItemQuantity: React.FC<ModalComponentProps> = ({
               />
               <ThemedText>kom</ThemedText>
             </ThemedView>
-            <ThemedView style={styles.priceQuantityContainer}>
+           {editPrice && <ThemedView style={styles.priceQuantityContainer}>
               <ThemedTextInput
                 style={styles.priceQuantityInput}
                 value={price}
@@ -83,7 +85,7 @@ const ModalEditItemQuantity: React.FC<ModalComponentProps> = ({
                 autoComplete="off"
               />
               <ThemedText>RSD</ThemedText>
-            </ThemedView>
+            </ThemedView>}
           </ThemedView>
 
           <ThemedView style={styles.buttonsContainer}>
@@ -115,7 +117,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderBottomWidth: 2,
   },
-  productContainer: {
+  productContainer: { 
+    height: 150,
     gap: 8,
     marginBottom: 20,
     textAlign: "center",

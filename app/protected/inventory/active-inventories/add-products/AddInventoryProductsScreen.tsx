@@ -19,7 +19,6 @@ import useAuth from "@/hooks/useAuth";
 import InventoryProductsView from "../../components/InventoryProductsView";
 
 const AddInventoryProductsScreen = () => {
-  const { id, store, date } = useLocalSearchParams();
   const [loading, setLoading] = useState<boolean>(false);
   const [quantity, setQuantity] = useState<string>("");
   const [search, setSearch] = useState<string>("");
@@ -30,7 +29,9 @@ const AddInventoryProductsScreen = () => {
   const router = useRouter();
   const { authUser } = useAuth();
 
-
+  const { id, store, date, editPrice }: { id: string; store: string; date: string; editPrice?: string } =
+    useLocalSearchParams();
+  const parsedEditPrice = editPrice === "true" || false;
 
   const axiosPrivate = useAxiosPrivate();
 
@@ -177,6 +178,7 @@ const AddInventoryProductsScreen = () => {
         </ThemedView>
         <ThemedScrollView style={styles.inventoriedProductsList}>
           <InventoryProductsView
+            editPrice={parsedEditPrice}
             inventoriedProducts={inventoriedProducts}
             getInventoriedProducts={getInventoriedProducts}
           />

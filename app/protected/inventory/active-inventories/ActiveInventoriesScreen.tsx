@@ -54,15 +54,19 @@ const ActiveInventoriesScreen = () => {
             ? inventories.map((inventory) => (
                 <ThemedView style={styles.inventoryContainer} key={inventory.inventoryId}>
                   <ThemedView style={styles.itemDataContainer}>
-                    <ThemedText type="title" >{inventory.Stores.storeName}</ThemedText>
-                    <ThemedText >{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
+                    <ThemedText type="title">{inventory.Stores.storeName}</ThemedText>
+                    <ThemedText>{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
                   </ThemedView>
                   <ThemedView style={styles.iconsContainer}>
                     <TouchableOpacity
                       onPress={() =>
                         router.push({
                           pathname: "/protected/inventory/active-inventories/inventory-list/InventoryListScreen",
-                          params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") },
+                          params: {
+                            id: inventory.inventoryId,
+                            store: inventory.Stores.storeName,
+                            date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
+                          },
                         })
                       }
                     >
@@ -74,7 +78,11 @@ const ActiveInventoriesScreen = () => {
                       onPress={() =>
                         router.push({
                           pathname: "/protected/inventory/active-inventories/scan-products/ScanInventoryProductsScreen",
-                          params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") },
+                          params: {
+                            id: inventory.inventoryId,
+                            store: inventory.Stores.storeName,
+                            date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
+                          },
                         })
                       }
                     >
@@ -84,7 +92,11 @@ const ActiveInventoriesScreen = () => {
                       onPress={() =>
                         router.push({
                           pathname: "/protected/inventory/active-inventories/add-products/AddInventoryProductsScreen",
-                          params: { id: inventory.inventoryId, store: inventory.Stores.storeName, date: format(inventory?.inventoryDate, "dd.MM.yyyy") },
+                          params: {
+                            id: inventory.inventoryId,
+                            store: inventory.Stores.storeName,
+                            date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
+                          },
                         })
                       }
                     >

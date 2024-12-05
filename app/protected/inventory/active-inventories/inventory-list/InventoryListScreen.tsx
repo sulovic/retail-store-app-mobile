@@ -23,7 +23,9 @@ const InventoryListScreen = () => {
     count: 0,
   });
   const axiosPrivate = useAxiosPrivate();
-  const { id, store, date } = useLocalSearchParams();
+  const { id, store, date, editPrice }: { id: string; store: string; date: string; editPrice?: string } =
+    useLocalSearchParams();
+  const parsedEditPrice = editPrice === "true" || false;
 
   const getInventoriedProducts = async () => {
     try {
@@ -74,6 +76,7 @@ const InventoryListScreen = () => {
 
         <ThemedView style={styles.scannedProductsList}>
           <InventoryProductsView
+            editPrice={parsedEditPrice}
             inventoriedProducts={inventoriedProducts}
             getInventoriedProducts={getInventoriedProducts}
           />

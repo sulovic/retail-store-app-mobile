@@ -21,10 +21,13 @@ const ScanInventoryProductsScreen = () => {
   const [scannedProduct, setScannedProduct] = useState<Product | null>(null);
   const [inventoriedProducts, setInventoriedProducts] = useState<InventoryProduct[]>([]);
   const [cameraPermission, requestCameraPermission] = useCameraPermissions();
-  const { id, store, date } = useLocalSearchParams();
   const { authUser } = useAuth();
 
   const axiosPrivate = useAxiosPrivate();
+
+  const { id, store, date, editPrice }: { id: string; store: string; date: string; editPrice?: string } =
+    useLocalSearchParams();
+  const parsedEditPrice = editPrice === "true" || false;
 
   const getProduct = async (barCode: string) => {
     setLoading(true);
@@ -129,6 +132,7 @@ const ScanInventoryProductsScreen = () => {
           <>
             <ThemedView style={styles.scannedProductsList}>
               <InventoryProductsView
+                editPrice={parsedEditPrice}
                 inventoriedProducts={inventoriedProducts}
                 getInventoriedProducts={getInventoriedProducts}
               />

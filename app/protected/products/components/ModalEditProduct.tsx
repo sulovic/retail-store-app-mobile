@@ -11,7 +11,7 @@ interface ModalComponentProps {
   selectedProductEdit: Product;
   setSelectedProductEdit: React.Dispatch<React.SetStateAction<Product | null>>;
   showEditModal: boolean;
-  onOk: (updatedProduct : Product) => void;
+  onOk: (updatedProduct: Product) => void;
   onCancel: () => void;
 }
 
@@ -22,7 +22,6 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
   selectedProductEdit,
   setSelectedProductEdit,
 }) => {
-
   const [price, setPrice] = useState<string>("");
 
   useEffect(() => {
@@ -30,7 +29,6 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
   }, [selectedProductEdit]);
 
   const handleSubmit = () => {
-   
     if (!price || !/^\d+(\.\d{1,2})?$/.test(price) || parseFloat(price) <= 0) {
       Toast.error(`Nije uneta ispravna cena`, "top");
       return;
@@ -47,7 +45,7 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
     });
     onOk(updatedProduct);
   };
-  
+
   return (
     <Modal visible={showEditModal} animationType="fade" transparent={true}>
       <ThemedView style={styles.modalOverlay}>
@@ -60,6 +58,7 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
               <ThemedText>Naziv</ThemedText>
 
               <ThemedTextInput
+                style={styles.priceQuantityInput}
                 value={selectedProductEdit.productName}
                 onChangeText={(text: string) => setSelectedProductEdit({ ...selectedProductEdit, productName: text })}
                 placeholder="Naziv proizvoda"
@@ -69,6 +68,7 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
             <ThemedView style={styles.priceQuantityContainer}>
               <ThemedText>Barcode</ThemedText>
               <ThemedTextInput
+                style={styles.priceQuantityInput}
                 value={selectedProductEdit.productBarcode}
                 onChangeText={(text: string) =>
                   setSelectedProductEdit({ ...selectedProductEdit, productBarcode: text })
@@ -78,9 +78,9 @@ const ModalEditProduct: React.FC<ModalComponentProps> = ({
               />
             </ThemedView>
             <ThemedView style={styles.priceQuantityContainer}>
-              <ThemedText>Cena:</ThemedText>
+              <ThemedText>Cena</ThemedText>
               <ThemedTextInput
-                style={{ width: 120 }}
+                style={styles.priceQuantityInput}
                 value={price}
                 onChangeText={(text) => setPrice(text)}
                 keyboardType="decimal-pad"
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
   },
   productContainer: {
+    height: 250,
     gap: 8,
     marginBottom: 20,
     textAlign: "center",

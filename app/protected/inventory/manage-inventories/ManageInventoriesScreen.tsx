@@ -64,6 +64,7 @@ const ManageInventoriesScreen = () => {
                         pathname: "/protected/inventory/active-inventories/inventory-list/InventoryListScreen",
                         params: {
                           id: inventory.inventoryId,
+                          editPrice: "true",
                           store: inventory.Stores.storeName,
                           date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
                         },
@@ -83,6 +84,7 @@ const ManageInventoriesScreen = () => {
                         pathname: "/protected/inventory/active-inventories/scan-products/ScanInventoryProductsScreen",
                         params: {
                           id: inventory.inventoryId,
+                          editPrice: "true",
                           store: inventory.Stores.storeName,
                           date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
                         },
@@ -97,6 +99,7 @@ const ManageInventoriesScreen = () => {
                         pathname: "/protected/inventory/active-inventories/add-products/AddInventoryProductsScreen",
                         params: {
                           id: inventory.inventoryId,
+                          editPrice: "true",
                           store: inventory.Stores.storeName,
                           date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
                         },

@@ -16,9 +16,10 @@ import Loader from "@/components/Loader";
 import formatNumber from "@/services/formatNumber";
 
 const InventoryProductsView: React.FC<{
+  editPrice: boolean;
   inventoriedProducts: InventoryProduct[];
   getInventoriedProducts: () => Promise<void>;
-}> = ({ inventoriedProducts, getInventoriedProducts }) => {
+}> = ({ inventoriedProducts, getInventoriedProducts, editPrice }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [selectedInventoryProduct, setSelectedInventoryProduct] = useState<InventoryProduct | null>(null);
@@ -124,8 +125,11 @@ const InventoryProductsView: React.FC<{
           <ThemedText>Nema proizvoda</ThemedText>
         )}
 
-        {selectedInventoryProduct && (
+       
+      </ThemedScrollView>
+      {selectedInventoryProduct && (
           <ModalEditItemQuantity
+            editPrice={editPrice}
             showEditModal={showEditModal}
             selectedInventoryProduct={selectedInventoryProduct}
             setSelectedInventoryProduct={setSelectedInventoryProduct}
@@ -133,7 +137,6 @@ const InventoryProductsView: React.FC<{
             onOk={handleEditQuantityPrice}
           />
         )}
-      </ThemedScrollView>
       {selectedInventoryProduct && (
         <ThemedModal
           showModal={showModal}

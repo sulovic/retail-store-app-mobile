@@ -116,7 +116,7 @@ const Login = () => {
                     title="Zatvori aplikaciju"
                     style={styles.buttons}
                     type="secondary"
-                    onPress={() => () => BackHandler.exitApp()}
+                    onPress={() => BackHandler.exitApp()}
                   />
                 </ThemedView>
               </>
