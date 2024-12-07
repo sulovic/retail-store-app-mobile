@@ -61,7 +61,7 @@ const ActiveInventoriesScreen = () => {
                     <TouchableOpacity
                       onPress={() =>
                         router.push({
-                          pathname: "/protected/inventory/active-inventories/inventory-list/InventoryListScreen",
+                          pathname: "/protected/inventory/components/InventoryListScreen",
                           params: {
                             id: inventory.inventoryId,
                             store: inventory.Stores.storeName,
@@ -77,7 +77,7 @@ const ActiveInventoriesScreen = () => {
                     <TouchableOpacity
                       onPress={() =>
                         router.push({
-                          pathname: "/protected/inventory/active-inventories/scan-products/ScanInventoryProductsScreen",
+                          pathname: "/protected/inventory/components/ScanInventoryProductsScreen",
                           params: {
                             id: inventory.inventoryId,
                             store: inventory.Stores.storeName,
@@ -91,7 +91,7 @@ const ActiveInventoriesScreen = () => {
                     <TouchableOpacity
                       onPress={() =>
                         router.push({
-                          pathname: "/protected/inventory/active-inventories/add-products/AddInventoryProductsScreen",
+                          pathname: "/protected/inventory/components/AddInventoryProductsScreen",
                           params: {
                             id: inventory.inventoryId,
                             store: inventory.Stores.storeName,

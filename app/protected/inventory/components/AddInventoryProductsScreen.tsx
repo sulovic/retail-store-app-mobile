@@ -8,7 +8,7 @@ import useAxiosPrivate from "@/hooks/useAxiosPrivate";
 import Loader from "@/components/Loader";
 import { handleApiError } from "@/services/errorHandlers";
 import generateApiParams from "@/services/generateApiParams";
-import InventoryProductsSearchBar from "../../components/InventoryProductsSearchBar";
+import InventoryProductsSearchBar from "./InventoryProductsSearchBar";
 import { TouchableOpacity } from "react-native";
 import ThemedScrollView from "@/components/ThemedScrollView";
 import ThemedTextInput from "@/components/ThemedTextInput";
@@ -16,7 +16,7 @@ import MyButton from "@/components/ThemedButton";
 import { Toast } from "toastify-react-native";
 import { useRouter } from "expo-router";
 import useAuth from "@/hooks/useAuth";
-import InventoryProductsView from "../../components/InventoryProductsView";
+import InventoryProductsView from "./InventoryProductsView";
 
 const AddInventoryProductsScreen = () => {
   const [loading, setLoading] = useState<boolean>(false);

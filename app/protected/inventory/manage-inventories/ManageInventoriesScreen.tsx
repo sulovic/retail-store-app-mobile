@@ -3,7 +3,7 @@ import ThemedView from "@/components/ThemedView";
 import ThemedText from "@/components/ThemedText";
 import ThemedScrollView from "@/components/ThemedScrollView";
 import useAxiosPrivate from "@/hooks/useAxiosPrivate";
-import { Inventory } from "@/types/types";
+import { Inventory, InventoryProduct } from "@/types/types";
 import { handleApiError } from "@/services/errorHandlers";
 import { Stack } from "expo-router";
 import { format } from "date-fns";
@@ -13,10 +13,14 @@ import { useThemeColor } from "@/hooks/useThemeColor";
 import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
+import ThemedModal from "@/components/ThemedModal";
 import Loader from "@/components/Loader";
+import { exportInventoryProductList } from "@/services/csvFunctions";
 
 const ManageInventoriesScreen = () => {
   const [inventories, setInventories] = useState<Inventory[]>([]);
+  const [showPrintModal, setShowPrintModal] = useState<boolean>(false);
+  const [selectedInventory, setSelectedInventory] = useState<Inventory | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const axiosPrivate = useAxiosPrivate();
   const iconColor = useThemeColor({}, "icon");
@@ -24,9 +28,8 @@ const ManageInventoriesScreen = () => {
   const router = useRouter();
 
   const getInventories = async () => {
-    setLoading(true);
-
     try {
+      setLoading(true);
       const inventories: { data: Inventory[] } = await axiosPrivate.get("/api/inventories");
       setInventories(inventories.data);
     } catch (error) {
@@ -39,6 +42,23 @@ const ManageInventoriesScreen = () => {
   useEffect(() => {
     getInventories();
   }, []);
+
+  const printInventoryList = async () => {
+    setLoading(true);
+    try {
+      const inventoryData: { data: InventoryProduct[] } = await axiosPrivate.get(
+        `/api/inventory-products?inventoryId=${selectedInventory?.inventoryId}`
+      );
+      if (selectedInventory) {
+        exportInventoryProductList({ inventory: selectedInventory, inventoryProductsList: inventoryData.data });
+      }
+    } catch (error) {
+      handleApiError(error);
+    } finally {
+      setShowPrintModal(false);
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -58,10 +78,17 @@ const ManageInventoriesScreen = () => {
                   <ThemedText>{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
                 </ThemedView>
                 <ThemedView style={styles.iconsContainer}>
+                  {!inventory.archived && (
+                    <TouchableOpacity onPress={() => console.log("Archiving inventory...")}>
+                      <MaterialIcons style={styles.iconStyle} name={"archive"} size={60} color={iconColor} />
+                    </TouchableOpacity>
+                  )}
+                </ThemedView>
+                <ThemedView style={styles.iconsContainer}>
                   <TouchableOpacity
                     onPress={() =>
                       router.push({
-                        pathname: "/protected/inventory/active-inventories/inventory-list/InventoryListScreen",
+                        pathname: "/protected/inventory/components/InventoryListScreen",
                         params: {
                           id: inventory.inventoryId,
                           editPrice: "true",
@@ -73,15 +100,22 @@ const ManageInventoriesScreen = () => {
                   >
                     <MaterialIcons style={styles.iconStyle} name={"list-alt"} size={60} color={iconColor} />
                   </TouchableOpacity>
-                  <TouchableOpacity onPress={() => console.log("Archiving inventory...")}>
-                    <MaterialIcons style={styles.iconStyle} name={"archive"} size={60} color={iconColor} />
-                  </TouchableOpacity>
+                  {!inventory.archived && (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setShowPrintModal(true);
+                        setSelectedInventory(inventory);
+                      }}
+                    >
+                      <MaterialIcons style={styles.iconStyle} name={"print"} size={60} color={iconColor} />
+                    </TouchableOpacity>
+                  )}
                 </ThemedView>
                 <ThemedView style={styles.iconsContainer}>
                   <TouchableOpacity
                     onPress={() =>
                       router.push({
-                        pathname: "/protected/inventory/active-inventories/scan-products/ScanInventoryProductsScreen",
+                        pathname: "/protected/inventory/components/ScanInventoryProductsScreen",
                         params: {
                           id: inventory.inventoryId,
                           editPrice: "true",
@@ -96,7 +130,7 @@ const ManageInventoriesScreen = () => {
                   <TouchableOpacity
                     onPress={() =>
                       router.push({
-                        pathname: "/protected/inventory/active-inventories/add-products/AddInventoryProductsScreen",
+                        pathname: "/protected/inventory/components/AddInventoryProductsScreen",
                         params: {
                           id: inventory.inventoryId,
                           editPrice: "true",
@@ -116,6 +150,13 @@ const ManageInventoriesScreen = () => {
           )}
         </ThemedScrollView>
       </ThemedView>
+      <ThemedModal
+        showModal={showPrintModal}
+        onOk={printInventoryList}
+        onCancel={() => setShowPrintModal(false)}
+        title="Štampa liste popisa"
+        message={`Da li želite da odštampate listu popisa ${selectedInventory?.Stores.storeName}.`}
+      ></ThemedModal>
     </>
   );
 };

@@ -1,25 +1,36 @@
-import * as Sharing from "expo-sharing";
-import * as FileSystem from "expo-file-system";
 import * as DocumentPicker from "expo-document-picker";
+import * as XLSX from "xlsx";
+import * as FileSystem from "expo-file-system";
+import * as Sharing from "expo-sharing";
 import Papa from "papaparse";
 import { Toast } from "toastify-react-native";
-import { Product, CsvData } from "../types/types";
+import { Product, CsvData, InventoryProduct, Inventory } from "../types/types";
+import { formatDate } from "date-fns";
 
-const exportCSV = async (data: CsvData[]) => {
+const exportXLS = async (data: (string | number)[][]) => {
   try {
-    const csv = Papa.unparse(data);
+    // Convert data to a worksheet
+    const ws = XLSX.utils.aoa_to_sheet(data);
 
-    const fileUri = FileSystem.documentDirectory + "export.csv";
+    // Create a workbook and append the worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
 
-    await FileSystem.writeAsStringAsync(fileUri, csv, {
-      encoding: FileSystem.EncodingType.UTF8,
+    // Write workbook as base64
+    const excelData = XLSX.write(wb, { type: "base64", bookType: "xlsx" });
+
+    // Define file path
+    const fileUri = FileSystem.documentDirectory + "export.xlsx";
+
+    // Write the base64 data to a file
+    await FileSystem.writeAsStringAsync(fileUri, excelData, {
+      encoding: FileSystem.EncodingType.Base64,
     });
 
+    // Share the file
     await Sharing.shareAsync(fileUri);
-
-    await FileSystem.deleteAsync(fileUri);
   } catch (error) {
-    Toast.error("Greška pri obradi podataka.", "top");
+    Toast.error("Greška prilikom obrade podataka.", "top");
   }
 };
 
@@ -66,14 +77,13 @@ const importCSV = async (): Promise<CsvData[]> => {
 };
 
 const prepareProductData = (data: CsvData[]): Omit<Product, "productId">[] => {
-  console.log("Received data:", data);
   const preparedData = data
     .filter((item) => item.productBarcode && item.productPrice && item.productName)
     .map((item) => {
       const productData: Omit<Product, "productId"> = {
         productName: item.productName as string,
         productBarcode: item.productBarcode as string,
-        productPrice: parseFloat((item.productPrice as string).replace(",", ".")),
+        productPrice: parseFloat(parseFloat((item.productPrice as string).replace(",", ".")).toFixed(2)),
       };
 
       // Conditionally add productDesc if provided
@@ -88,9 +98,43 @@ const prepareProductData = (data: CsvData[]): Omit<Product, "productId">[] => {
 
       return productData;
     });
-
-  console.log("Prepared data:", preparedData);
   return preparedData;
 };
 
-export { exportCSV, importCSV, prepareProductData };
+const exportInventoryProductList = ({
+  inventory,
+  inventoryProductsList,
+}: {
+  inventory: Inventory;
+  inventoryProductsList: InventoryProduct[];
+}) => {
+  let inventorySum: number = 0;
+  const inventoryList: any[] = [];
+
+  inventoryList.push([
+    "Prodavnica",
+    inventory.Stores.storeName,
+    "",
+    "Datum",
+    formatDate(inventory.inventoryDate, "dd.MM.yyyy."),
+  ]);
+  inventoryList.push(["RB", "Naziv proizvoda", "Barkod", "Kolicina", "Cena", "Ukupno"]);
+
+  inventoryProductsList.map((item, index) => {
+    inventoryList.push([
+      index + 1,
+      item.Products.productName,
+      item.Products.productBarcode,
+      item.productQuantity,
+      item.productPrice,
+      item.productPrice * item.productQuantity,
+    ]);
+    inventorySum += item.productPrice * item.productQuantity;
+  });
+
+  inventoryList.push(["", "", "", "", "Ukupno:", inventorySum]);
+
+  exportXLS(inventoryList);
+};
+
+export { exportXLS, importCSV, prepareProductData, exportInventoryProductList };

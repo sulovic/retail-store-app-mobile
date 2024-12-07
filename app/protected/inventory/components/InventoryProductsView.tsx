@@ -124,19 +124,17 @@ const InventoryProductsView: React.FC<{
         ) : (
           <ThemedText>Nema proizvoda</ThemedText>
         )}
-
-       
       </ThemedScrollView>
       {selectedInventoryProduct && (
-          <ModalEditItemQuantity
-            editPrice={editPrice}
-            showEditModal={showEditModal}
-            selectedInventoryProduct={selectedInventoryProduct}
-            setSelectedInventoryProduct={setSelectedInventoryProduct}
-            onCancel={() => setShowEditModal(false)}
-            onOk={handleEditQuantityPrice}
-          />
-        )}
+        <ModalEditItemQuantity
+          editPrice={editPrice}
+          showEditModal={showEditModal}
+          selectedInventoryProduct={selectedInventoryProduct}
+          setSelectedInventoryProduct={setSelectedInventoryProduct}
+          onCancel={() => setShowEditModal(false)}
+          onOk={handleEditQuantityPrice}
+        />
+      )}
       {selectedInventoryProduct && (
         <ThemedModal
           showModal={showModal}

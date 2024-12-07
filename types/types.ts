@@ -112,5 +112,6 @@ productName?: string;
 productBarcode?: string;
 };
 
+
 export type CsvData = { [key: string]: string | number };
 

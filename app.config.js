@@ -27,8 +27,6 @@ export default {
       permissions: [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
       ],
     },
     web: {

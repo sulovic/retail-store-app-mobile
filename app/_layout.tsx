@@ -13,6 +13,7 @@ import { Slot, Stack } from "expo-router";
 
 // Import your global CSS file
 import "./global.css";
+import { FlipInEasyX } from "react-native-reanimated";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -36,8 +37,23 @@ export default function RootLayout() {
       <AuthProvider>
         <GestureHandlerRootView style={{ flex: 1 }}>
           <SafeAreaView style={{ flex: 1 }}>
-            <ToastManager />
-            <Stack/>
+            <ToastManager
+              style={{
+                elevation: 10,
+                zIndex: 1000,
+                position: "absolute",
+                padding: 8,
+                width: "auto",
+                maxWidth: "90%",
+                height: "auto",
+              }}
+              textStyle={{
+                textWrap: "wrap",
+                textAlign: "center",
+                margin:4,
+              }}
+            />
+            <Stack />
           </SafeAreaView>
         </GestureHandlerRootView>
       </AuthProvider>

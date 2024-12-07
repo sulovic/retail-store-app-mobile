@@ -7,9 +7,15 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { Image } from "expo-image";
 import { useThemeColor } from "@/hooks/useThemeColor";
+import useAuth from "@/hooks/useAuth";
 
-const ProductsView: React.FC<{ products: Product[]; handleEditProduct: (product: Product) => void; handleDeleteProduct: (product: Product) => void }> = ({ products, handleEditProduct, handleDeleteProduct }) => {
+const ProductsView: React.FC<{
+  products: Product[];
+  handleEditProduct: (product: Product) => void;
+  handleDeleteProduct: (product: Product) => void;
+}> = ({ products, handleEditProduct, handleDeleteProduct }) => {
   const iconColor = useThemeColor({}, "icon");
+  const { authUser } = useAuth();
 
   return (
     <>
@@ -28,14 +34,16 @@ const ProductsView: React.FC<{ products: Product[]; handleEditProduct: (product:
                 </ThemedView>
               </ThemedView>
 
-              <ThemedView style={styles.iconsContainer}>
-                <TouchableOpacity onPress={() => handleEditProduct(product)}>
-                  <MaterialIcons name="edit" size={50} color={iconColor} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={() => handleDeleteProduct(product)}>
-                  <MaterialIcons name="delete" size={50} color={iconColor} />
-                </TouchableOpacity>
-              </ThemedView>
+              {authUser && authUser?.UserRoles.roleId > 3000 && (
+                <ThemedView style={styles.iconsContainer}>
+                  <TouchableOpacity onPress={() => handleEditProduct(product)}>
+                    <MaterialIcons name="edit" size={50} color={iconColor} />
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={() => handleDeleteProduct(product)}>
+                    <MaterialIcons name="delete" size={50} color={iconColor} />
+                  </TouchableOpacity>
+                </ThemedView>
+              )}
             </ThemedView>
           ))
         ) : (
