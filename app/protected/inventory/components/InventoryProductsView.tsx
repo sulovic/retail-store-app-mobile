@@ -97,7 +97,7 @@ const InventoryProductsView: React.FC<{
                       setShowModal(true);
                     }}
                   >
-                    <MaterialIcons style={styles.iconStyle} name={"delete"} size={50} color={iconColor} />
+                    <MaterialIcons style={styles.iconStyle} name={"delete"} size={40} color={iconColor} />
                   </TouchableOpacity>
                   <TouchableOpacity
                     onPress={() => {
@@ -105,7 +105,7 @@ const InventoryProductsView: React.FC<{
                       setShowEditModal(true);
                     }}
                   >
-                    <MaterialIcons style={styles.iconStyle} name={"edit"} size={50} color={iconColor} />
+                    <MaterialIcons style={styles.iconStyle} name={"edit"} size={40} color={iconColor} />
                   </TouchableOpacity>
                 </ThemedView>
               </ThemedView>
@@ -137,6 +137,7 @@ const InventoryProductsView: React.FC<{
       )}
       {selectedInventoryProduct && (
         <ThemedModal
+          danger={true}
           showModal={showModal}
           onOk={handleDelete}
           onCancel={() => {

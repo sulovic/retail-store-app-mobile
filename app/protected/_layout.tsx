@@ -17,7 +17,7 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
   const colorScheme = useColorScheme();
   const [mounted, setMounted] = useState(false);
 
-  const menuItems : { label: string; href: Href; subItems?: { label: string; href: Href }[] }[] = [
+  const menuItems: { label: string; href: Href; subItems?: { label: string; href: Href }[] }[] = [
     {
       label: "Popisi",
       href: "/protected/inventory/InventoriesScreen",
@@ -38,7 +38,17 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
     },
     {
       label: "Nabavke",
-      href: "/protected/procurment/ProcurementScreen",
+      href: "/protected/procurement/ProcurementScreen",
+      subItems: [
+        {
+          label: "Unos trebovanja",
+          href: "/protected/procurement/new-procurement/NewProcurementsScreen",
+        },
+        {
+          label: "Obrada trebovanja",
+          href: "/protected/procurement/process-procurement/ProcessProcurementsScreen",
+        },
+      ],
     },
     {
       label: "Proizvodi",
@@ -53,9 +63,6 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
           href: "/protected/products/new-product/NewProductScreen",
         },
         {
-          label: "Skeniraj novi proizvod",
-          href: "/protected/products/scan-new-product/ScanNewProductScreen",
-        },{
           label: "Učitaj listu proizvoda",
           href: "/protected/products/upload-products/UploadProductsScreen",
         },
@@ -64,30 +71,40 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
     {
       label: "Korisnici",
       href: "/protected/users/UsersScreen",
-    },       
+    },
   ];
 
   function CustomDrawerContent() {
     return (
       <ThemedView style={{ flex: 1, paddingHorizontal: 10, paddingVertical: 20, gap: 10 }}>
-        <ThemedText type="defaultSemiBold">Retail Store APP</ThemedText>
+        <ThemedText type="title">Retail Store APP</ThemedText>
 
-        <ThemedLink key="/protected/home/HomeScreen" type="defaultSemiBold" href="/protected/home/HomeScreen" style={{ marginLeft: 20 }}>
+        <ThemedLink
+          key="/protected/home/HomeScreen"
+          type="title"
+          href="/protected/home/HomeScreen"
+          style={{ marginLeft: 20 }}
+        >
           Home
         </ThemedLink>
         {menuItems.map(
           (item, index) =>
             authUser &&
-            authUser.UserRoles.roleId > privilegesSchema[item.href as keyof typeof privilegesSchema]  && (
+            authUser.UserRoles.roleId > privilegesSchema[item.href as keyof typeof privilegesSchema] && (
               <React.Fragment key={`menuItem-${index}`}>
-                <ThemedLink key={item.href as string} type="defaultSemiBold" href={item.href} style={{ marginLeft: 20 }}>
+                <ThemedLink key={item.href as string} type="title" href={item.href} style={{ marginLeft: 20 }}>
                   {item.label}
                 </ThemedLink>
                 {item.subItems?.map(
                   (subItem) =>
                     authUser &&
-                    authUser.UserRoles.roleId > privilegesSchema[subItem.href as keyof typeof privilegesSchema]  && (
-                      <ThemedLink key={subItem.href as string} type="default" href={subItem.href} style={{ marginLeft: 40 }}>
+                    authUser.UserRoles.roleId > privilegesSchema[subItem.href as keyof typeof privilegesSchema] && (
+                      <ThemedLink
+                        key={subItem.href as string}
+                        type="subtitle"
+                        href={subItem.href}
+                        style={{ marginLeft: 40 }}
+                      >
                         {subItem.label}
                       </ThemedLink>
                     )
@@ -97,7 +114,7 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
         )}
 
         <ThemedView style={{ paddingHorizontal: 10, paddingVertical: 20, gap: 10 }}>
-          <ThemedText type="defaultSemiBold">
+          <ThemedText type="title">
             {authUser?.firstName} {authUser?.lastName}
           </ThemedText>
           <MyButton type="secondary" title="Odjavi se" onPress={() => handleLogout()} />
@@ -114,7 +131,10 @@ const ProtectedLayout: React.FC<{ children: React.ReactNode }> = ({ children }) 
     if (!authUser && mounted && pathname !== "/") {
       router.push("/");
     }
-    if (authUser?.UserRoles?.roleId !== undefined && authUser.UserRoles.roleId < (privilegesSchema[pathname as keyof typeof privilegesSchema] || Infinity)) {
+    if (
+      authUser?.UserRoles?.roleId !== undefined &&
+      authUser.UserRoles.roleId < (privilegesSchema[pathname as keyof typeof privilegesSchema] || Infinity)
+    ) {
       router.push("/protected/home/HomeScreen");
     }
   }, [authUser, mounted, router, pathname]);

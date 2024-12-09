@@ -26,6 +26,8 @@ export type AxiosLoginResponse = {
   data: { accessToken: string };
 };
 
+export type CsvData = { [key: string]: string | number };
+
 export type AuthContextType = {
   authUser: AuthUser | null;
   setAuthUser: React.Dispatch<React.SetStateAction<AuthUser | null>>;
@@ -112,6 +114,22 @@ productName?: string;
 productBarcode?: string;
 };
 
-
-export type CsvData = { [key: string]: string | number };
-
+export type Procurement = {
+  procurementId: number;
+  Products: {
+    productId: number;
+    productName: string;
+    productBarcode: string;
+  }
+  productQuantity: number;
+  Stores: {
+    storeId: number;
+    storeName: string;}
+    Users: {
+    userId: number;
+    firstName: string;
+    lastName: string;
+  };
+  completed: boolean | null;
+  createdAt:  Date;
+};

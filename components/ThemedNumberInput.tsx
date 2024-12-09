@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     minWidth: 80,
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 18,
     borderWidth: 2,
     borderColor: "#ccc",
     textAlign: "right",

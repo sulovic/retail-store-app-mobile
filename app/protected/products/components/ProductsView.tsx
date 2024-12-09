@@ -37,10 +37,10 @@ const ProductsView: React.FC<{
               {authUser && authUser?.UserRoles.roleId > 3000 && (
                 <ThemedView style={styles.iconsContainer}>
                   <TouchableOpacity onPress={() => handleEditProduct(product)}>
-                    <MaterialIcons name="edit" size={50} color={iconColor} />
+                    <MaterialIcons name="edit" size={40} color={iconColor} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleDeleteProduct(product)}>
-                    <MaterialIcons name="delete" size={50} color={iconColor} />
+                    <MaterialIcons name="delete" size={40} color={iconColor} />
                   </TouchableOpacity>
                 </ThemedView>
               )}
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   productContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
-    marginBottom: 16,
+    marginBottom: 8,
     borderWidth: 2,
     borderRadius: 4,
     padding: 4,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   productInfoContainer: {
     flexDirection: "row",
     flex: 1,
-    gap: 16,
+    gap: 8,
     marginBottom: 8,
   },
   productDetails: {
@@ -83,12 +83,12 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   productImage: {
-    width: 96,
-    height: 96,
+    width: 80,
+    height: 80,
   },
   iconsContainer: {
     justifyContent: "center",
-    gap: 16,
+    gap: 8,
   },
   separator: {
     borderBottomWidth: 1,

@@ -64,17 +64,17 @@ const ManageInventoriesScreen = () => {
     <>
       <Stack.Screen options={{ title: "Lista svih popisa", animation: "slide_from_right" }} />
       <Loader loading={loading} />
-      <ThemedView>
+      <ThemedView style={styles.container}>
         <ThemedView style={styles.headerContainer}>
           <ThemedText type="subtitle">Lista svih popisa</ThemedText>
           <MyButton title="Osveži" onPress={() => getInventories()} />
         </ThemedView>
-        <ThemedScrollView>
+        <ThemedScrollView style={styles.inventoriesContainer}>
           {inventories.length > 0 ? (
             inventories.map((inventory) => (
               <ThemedView style={[styles.inventoryContainer]} key={inventory.inventoryId}>
                 <ThemedView style={styles.itemDataContainer}>
-                  <ThemedText type="title">{inventory.Stores.storeName}</ThemedText>
+                  <ThemedText type="subtitle">{inventory.Stores.storeName}</ThemedText>
                   <ThemedText>{format(inventory?.inventoryDate, "dd.MM.yyyy")}</ThemedText>
                 </ThemedView>
                 <ThemedView style={styles.iconsContainer}>
@@ -111,38 +111,6 @@ const ManageInventoriesScreen = () => {
                     </TouchableOpacity>
                   )}
                 </ThemedView>
-                <ThemedView style={styles.iconsContainer}>
-                  <TouchableOpacity
-                    onPress={() =>
-                      router.push({
-                        pathname: "/protected/inventory/components/ScanInventoryProductsScreen",
-                        params: {
-                          id: inventory.inventoryId,
-                          editPrice: "true",
-                          store: inventory.Stores.storeName,
-                          date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
-                        },
-                      })
-                    }
-                  >
-                    <MaterialIcons style={styles.iconStyle} name={"qr-code"} size={60} color={iconColor} />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() =>
-                      router.push({
-                        pathname: "/protected/inventory/components/AddInventoryProductsScreen",
-                        params: {
-                          id: inventory.inventoryId,
-                          editPrice: "true",
-                          store: inventory.Stores.storeName,
-                          date: format(inventory?.inventoryDate, "dd.MM.yyyy"),
-                        },
-                      })
-                    }
-                  >
-                    <MaterialIcons style={styles.iconStyle} name={"add"} size={60} color={iconColor} />
-                  </TouchableOpacity>
-                </ThemedView>
               </ThemedView>
             ))
           ) : (
@@ -162,12 +130,19 @@ const ManageInventoriesScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 4,
+  },
   headerContainer: {
     flexDirection: "row",
-    flexGrow: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 8,
+    paddingVertical: 8,
+  },
+  inventoriesContainer: {
+    flex: 1,
+    gap: 8,
   },
   inventoryContainer: {
     flexDirection: "row",
@@ -177,7 +152,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderWidth: 2,
     borderRadius: 4,
-    margin: 4,
+    marginVertical: 4,
   },
   itemDataContainer: {
     flex: 1,

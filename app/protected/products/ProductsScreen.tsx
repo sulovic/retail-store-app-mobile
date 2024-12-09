@@ -32,14 +32,6 @@ const ProductsScreen = () => {
               text="Dodaj novi proizvod"
             />
           )}
-        {authUser &&
-          authUser.UserRoles.roleId > privilegesSchema["/protected/products/scan-new-product/ScanNewProductScreen"] && (
-            <NavigationBlock
-              href={"/protected/products/scan-new-product/ScanNewProductScreen"}
-              icon="qr-code-scanner"
-              text="Skeniraj novi proizvod"
-            />
-          )}
           {authUser &&
           authUser.UserRoles.roleId > privilegesSchema["/protected/products/upload-products/UploadProductsScreen"] && (
             <NavigationBlock
@@ -58,6 +50,7 @@ export default ProductsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 4,
+    padding: 4,
+    gap: 8,
   },
 });

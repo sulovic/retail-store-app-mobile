@@ -5,6 +5,7 @@ import ThemedText from "./ThemedText";
 import MyButton from "./ThemedButton";
 
 interface ModalComponentProps {
+  danger?: boolean;
   showModal: boolean;
   onOk: () => void;
   onCancel: () => void;
@@ -12,16 +13,16 @@ interface ModalComponentProps {
   message: string;
 }
 
-const ThemedModal: React.FC<ModalComponentProps> = ({ showModal, onOk, onCancel, title, message }) => {
+const ThemedModal: React.FC<ModalComponentProps> = ({ showModal, onOk, onCancel, title, message, danger=false }) => {
   return (
     <Modal visible={showModal} animationType="fade" transparent={true}>
       <ThemedView style={styles.modalOverlay}>
         <ThemedView style={styles.modalContainer}>
-          <ThemedText type="title" style={styles.modalTitle}>{title}</ThemedText>
+          <ThemedText type="title" style={[styles.modalTitle, danger && { color: "red" }]}>{title}</ThemedText>
           <ThemedText style={styles.modalMessage}>{message}</ThemedText>
           <ThemedView style={styles.buttonsContainer}>
             <MyButton type="cancel" title="Odustni" onPress={onCancel} />
-            <MyButton title="OK"  onPress={onOk} />
+            <MyButton type={danger ? "danger" : "primary"} title="OK"  onPress={onOk} />
           </ThemedView>
         </ThemedView>
       </ThemedView>

@@ -31,21 +31,21 @@ export default ThemedText;
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 20,
+    fontSize: 18,
   },
   defaultSemiBold: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "600",
   },
   title: {
-    fontSize: 28,
-    fontWeight: "800",
-  },
-  subtitle: {
     fontSize: 24,
     fontWeight: "800",
   },
+  subtitle: {
+    fontSize: 20,
+    fontWeight: "800",
+  },
   link: {
-    lineHeight: 32,
+    lineHeight: 24,
   },
 });

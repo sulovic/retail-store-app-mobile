@@ -44,12 +44,12 @@ const ActiveInventoriesScreen = () => {
     <>
       <Stack.Screen options={{ title: "Aktivni popisi", animation: "slide_from_right" }} />
       <Loader loading={loading} />
-      <ThemedView>
+      <ThemedView style={styles.container}>
         <ThemedView style={styles.headerContainer}>
           <ThemedText type="subtitle">Lista aktivnih popisa</ThemedText>
           <ThemedButton title="Osveži" onPress={() => getInventories()} />
         </ThemedView>
-        <ThemedScrollView>
+        <ThemedScrollView style={styles.inventoriesContainer}>
           {inventories.length > 0
             ? inventories.map((inventory) => (
                 <ThemedView style={styles.inventoryContainer} key={inventory.inventoryId}>
@@ -113,12 +113,19 @@ const ActiveInventoriesScreen = () => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 4,
+  },
   headerContainer: {
     flexDirection: "row",
-    flexGrow: 1,
     justifyContent: "space-between",
     alignItems: "center",
-    padding: 8,
+    paddingVertical: 8,
+  },
+  inventoriesContainer: {
+    flex: 1,
+    gap: 8,
   },
   inventoryContainer: {
     flexDirection: "row",
@@ -128,7 +135,7 @@ const styles = StyleSheet.create({
     padding: 4,
     borderWidth: 2,
     borderRadius: 4,
-    margin: 4,
+    marginVertical: 4,
   },
   itemDataContainer: {
     flex: 1,

@@ -107,7 +107,7 @@ export default UploadProductsScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 4,
+    padding: 4,
     gap: 4,
   },
   headerContainer: {

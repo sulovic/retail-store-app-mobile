@@ -20,7 +20,7 @@ const ProductsListScreen = () => {
   const [search, setSearch] = useState<string>("");
   const [pagination, setPagination] = useState<PaginationType>({
     page: 1,
-    limit: 10,
+    limit: 25,
     count: 0,
   });
   const [selectedProductDelete, setSelectedProductDelete] = useState<Product | null>(null);
@@ -55,12 +55,7 @@ const ProductsListScreen = () => {
   };
 
   const handleEditProductOK = async (updatedProduct: Product) => {
-
-    if (
-      !updatedProduct?.productPrice ||
-      updatedProduct?.productPrice <= 0 ||
-      isNaN(updatedProduct?.productPrice)
-    ) {
+    if (!updatedProduct?.productPrice || updatedProduct?.productPrice <= 0 || isNaN(updatedProduct?.productPrice)) {
       Toast.error(`Nije uneta ispravna cena`, "top");
       return;
     }
@@ -119,6 +114,7 @@ const ProductsListScreen = () => {
       </ScrollView>
       <Pagination pagination={pagination} setPagination={setPagination} />
       <ThemedModal
+        danger={true}
         showModal={showDeleteModal}
         onOk={handleDeleteProductOK}
         onCancel={() => setShowDeleteModal(false)}
@@ -144,7 +140,7 @@ const ProductsListScreen = () => {
 const styles = StyleSheet.create({
   scrollContainer: {
     borderTopWidth: 2,
-    padding: 8,
+    padding: 4,
   },
   headerText: {
     fontWeight: "bold",

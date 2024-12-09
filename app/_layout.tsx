@@ -5,15 +5,15 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import "react-native-reanimated";
+import "react-native-gesture-handler";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { AuthProvider } from "@/contexts/AuthContext";
 import ToastManager from "toastify-react-native";
-import { Slot, Stack } from "expo-router";
+import { Stack } from "expo-router";
 
 // Import your global CSS file
 import "./global.css";
-import { FlipInEasyX } from "react-native-reanimated";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -50,10 +50,14 @@ export default function RootLayout() {
               textStyle={{
                 textWrap: "wrap",
                 textAlign: "center",
-                margin:4,
+                margin: 4,
               }}
             />
-            <Stack />
+            <Stack
+              screenOptions={{
+                animation: "slide_from_right",
+              }}
+            />
           </SafeAreaView>
         </GestureHandlerRootView>
       </AuthProvider>

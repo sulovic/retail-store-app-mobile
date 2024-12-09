@@ -19,8 +19,8 @@ const HomeScreen = () => {
         {authUser && authUser.UserRoles.roleId > privilegesSchema["/protected/inventory/InventoriesScreen"] && (
           <NavigationBlock href={"/protected/inventory/InventoriesScreen"} icon="inventory" text="Popisi" />
         )}
-        {authUser && authUser.UserRoles.roleId > privilegesSchema["/protected/procurment/ProcurementScreen"] && (
-          <NavigationBlock href={"/protected/procurment/ProcurementScreen"} icon="add-shopping-cart" text="Nabavke" />
+        {authUser && authUser.UserRoles.roleId > privilegesSchema["/protected/procurement/ProcurementScreen"] && (
+          <NavigationBlock href={"/protected/procurement/ProcurementScreen"} icon="shopping-cart" text="Nabavke" />
         )}
         {authUser && authUser.UserRoles.roleId > privilegesSchema["/protected/products/ProductsScreen"] && (
           <NavigationBlock href={"/protected/products/ProductsScreen"} icon="cookie" text="Proizvodi" />
@@ -38,6 +38,7 @@ export default HomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 4,
+    padding: 4,
+    gap: 8,
   },
 });

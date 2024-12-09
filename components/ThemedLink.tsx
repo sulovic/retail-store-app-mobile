@@ -40,22 +40,22 @@ const ThemedLink = ({
 
 const styles = StyleSheet.create({
   default: {
-    fontSize: 24,
+    fontSize: 18,
   },
   defaultSemiBold: {
-    fontSize: 24,
+    fontSize: 18,
     fontWeight: "600",
   },
   title: {
-    fontSize: 30,
-    fontWeight: "bold",
+    fontSize: 24,
+    fontWeight: "800",
   },
   subtitle: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "800",
   },
   link: {
-    fontSize: 24,
+    lineHeight: 24,
   },
 });
 

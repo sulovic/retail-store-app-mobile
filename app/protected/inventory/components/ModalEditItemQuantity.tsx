@@ -69,23 +69,24 @@ const ModalEditItemQuantity: React.FC<ModalComponentProps> = ({
               <ThemedTextInput
                 value={quantity}
                 style={styles.priceQuantityInput}
-
                 onChangeText={(text) => setQuantity(text)}
                 keyboardType="decimal-pad"
                 autoComplete="off"
               />
               <ThemedText>kom</ThemedText>
             </ThemedView>
-           {editPrice && <ThemedView style={styles.priceQuantityContainer}>
-              <ThemedTextInput
-                style={styles.priceQuantityInput}
-                value={price}
-                onChangeText={(text) => setPrice(text)}
-                keyboardType="decimal-pad"
-                autoComplete="off"
-              />
-              <ThemedText>RSD</ThemedText>
-            </ThemedView>}
+            {editPrice && (
+              <ThemedView style={styles.priceQuantityContainer}>
+                <ThemedTextInput
+                  style={styles.priceQuantityInput}
+                  value={price}
+                  onChangeText={(text) => setPrice(text)}
+                  keyboardType="decimal-pad"
+                  autoComplete="off"
+                />
+                <ThemedText>RSD</ThemedText>
+              </ThemedView>
+            )}
           </ThemedView>
 
           <ThemedView style={styles.buttonsContainer}>
@@ -97,6 +98,8 @@ const ModalEditItemQuantity: React.FC<ModalComponentProps> = ({
     </Modal>
   );
 };
+
+export default ModalEditItemQuantity;
 
 const styles = StyleSheet.create({
   modalOverlay: {
@@ -117,7 +120,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     borderBottomWidth: 2,
   },
-  productContainer: { 
+  productContainer: {
     height: 150,
     gap: 8,
     marginBottom: 20,
@@ -138,5 +141,3 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
 });
-
-export default ModalEditItemQuantity;

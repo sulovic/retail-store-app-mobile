@@ -56,7 +56,9 @@ export default UsersScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 4,
+    padding: 4,
+    gap: 8,
+
   },
   headerBlock: {
     flexDirection: "row",

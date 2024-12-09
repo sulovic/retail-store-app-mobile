@@ -95,6 +95,7 @@ const UsersDataView: React.FC<{ users: AuthUser[]; getUsers: () => Promise<void>
         )}
         {selectedUser && (
           <ThemedModal
+            danger = {true}
             showModal={showModal}
             onOk={handleDelete}
             onCancel={() => {

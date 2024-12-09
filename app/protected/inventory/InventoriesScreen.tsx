@@ -7,7 +7,7 @@ import useAuth from "@/hooks/useAuth";
 import privilegesSchema from "@/constants/privilegesSchema";
 import { StyleSheet } from "react-native";
 
-const HomeScreen = () => {
+const Inventories = () => {
   const { authUser } = useAuth();
 
   return (
@@ -47,11 +47,12 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default Inventories;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    margin: 4,
+    padding: 4,
+    gap: 8,
   },
 });

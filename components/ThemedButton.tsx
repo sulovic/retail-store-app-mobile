@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     transform: [{ scale: 0.96 }],
   },
   buttonText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: "600",
   },
 });

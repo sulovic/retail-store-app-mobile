@@ -40,7 +40,7 @@ const ProductSearchBar = ({
         autoComplete="off"
       />
       <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
-        <MaterialIcons name="search" size={36} color={iconColor} />
+        <MaterialIcons name="search" size={40} color={iconColor} />
       </TouchableOpacity>
     </ThemedView>
   );

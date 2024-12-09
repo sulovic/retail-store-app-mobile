@@ -23,7 +23,7 @@ padding: 6,
     borderRadius: 4,
     minWidth: 100,
     fontWeight: "600",
-    fontSize: 20,
+    fontSize: 18,
     borderWidth: 2,
     borderColor: "#ccc", // You can set a default border color here
   },

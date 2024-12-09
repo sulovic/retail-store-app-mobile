@@ -126,7 +126,7 @@ const AddInventoryProductsScreen = () => {
       <Stack.Screen options={{ title: `Dodaj: ${store}: ${date}`, animation: "slide_from_right" }} />
       <Loader loading={loading} />
       <ThemedView style={styles.container}>
-        <ThemedText>Pronađi i izaberi proizvod</ThemedText>
+        <ThemedText type="subtitle">Pronađi i izaberi proizvod</ThemedText>
         <InventoryProductsSearchBar
           placeHolder="Naziv / Barcode"
           search={search}
